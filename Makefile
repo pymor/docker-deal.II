@@ -8,8 +8,9 @@ dealiis: $(DEALII_VERSIONS)
 
 $(DEALII_VERSIONS):
 	cd "demo" && \
-	docker build --build-arg PYVER=$(PY) --build-arg DEALII_VERSION=$@ -t "pymor/dealii-testing_pymor_master:dealii_$@" .
+	docker build --build-arg PYVER=$(PY) --build-arg DEALII_VERSION=$@ -t "pymor/dealii:v$@_py$(PY)" .
+
 push:
-	docker push pymor/dealii-testing_pymor_master
+	docker push pymor/dealii
 
 all: dealiis
