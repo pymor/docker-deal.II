@@ -1,16 +1,18 @@
+PYTHONS = 3.5 3.6 3.7
+
 DEALII_VERSIONS = 9.0.0 8.5.1
-PY=3.5
 
-.PHONY: dealiis $(DEALII_VERSIONS) push
+.PHONY: pythons $(PYTHONS)
 
-dealiis: $(DEALII_VERSIONS)
+pythons: $(PYTHONS)
 
-
-$(DEALII_VERSIONS):
-	cd "testing" && \
-	docker build --build-arg PYVER=$(PY) --build-arg DEALIIVERSION=$@ -t "pymor/dealii:v$@_py$(PY)" .
-	cd "demo" && \
-	docker build --build-arg BASETAG=v$@_py$(PY) -t "pymor/dealii_demo:v$@_py$(PY)" .
+$(PYTHONS):
+	for DEAL in $(DEALII_VERSIONS) ; do \
+		cd "testing" && \
+		docker build --build-arg PYVER=$@ --build-arg DEALIIVERSION=$$DEAL -t "pymor/dealii:v$$DEAL_py$@" . && \
+		cd "demo" && \
+		docker build --build-arg BASETAG=v$$DEAL_py$@ -t "pymor/dealii_demo:v$$DEAL_py$@" . && \
+	done
 
 push:
 	docker push pymor/dealii
