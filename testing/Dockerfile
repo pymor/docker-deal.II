@@ -39,7 +39,7 @@ RUN cd /tmp && git clone https://github.com/dealii/dealii.git dealii-${DEALIIVER
           -DCMAKE_BUILD_TYPE=Release \
           -GNinja \
           ../ && \
-    ninja && ninja install && \
+    ninja -j 1 && ninja -j 1 install && \
     cd / && rm -rf /tmp/deal*
 
 # THE END
