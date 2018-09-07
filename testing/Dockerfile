@@ -26,8 +26,11 @@ RUN apt-get install -y software-properties-common \
     wget \
     zlib1g-dev \
     libopenmpi-dev \
+# next line is necessary for xfvb/qt/gl demo to work, needed till imaged rebased on pymor/testing
+    xauth x11-apps xvfb libgl1-mesa-dri libglu1-mesa \
     openmpi-bin gosu && \
     pip install numpy
+
 
 RUN cd /tmp && git clone https://github.com/dealii/dealii.git dealii-${DEALIIVERSION}-src && \
     cd dealii-${DEALIIVERSION}-src && \
