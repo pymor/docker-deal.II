@@ -1,7 +1,7 @@
 # because of the for loop/pushd/popd
 SHELL=/bin/bash
 
-PYTHONS = 3.5 3.6 3.7
+PYTHONS = 3.6 3.7
 DEALII_VERSIONS = 9.0.0 8.5.1
 
 .PHONY: pythons $(PYTHONS)
