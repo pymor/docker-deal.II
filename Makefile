@@ -2,7 +2,7 @@
 SHELL=/bin/bash
 
 PYTHONS = 3.6 3.7
-DEALII_VERSIONS = 9.0.0 8.5.1
+DEALII_VERSIONS = 9.0.1 8.5.1
 
 .PHONY: pythons $(PYTHONS)
 
