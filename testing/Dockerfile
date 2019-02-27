@@ -20,6 +20,8 @@ RUN apt-get install -y software-properties-common \
     libnetcdf-c++4-dev \
     libnetcdf-cxx-legacy-dev \
     libnetcdf-dev \
+    libarpack2-dev libsuitesparse-dev libboost-all-dev libgmsh-dev \
+    liblapack-dev libmuparser-dev libmetis-dev libtbb-dev \
     ninja-build \
     numdiff \
     unzip \
@@ -31,7 +33,6 @@ RUN apt-get install -y software-properties-common \
     openmpi-bin gosu && \
     pip install numpy
 
-
 RUN cd /tmp && git clone https://github.com/dealii/dealii.git dealii-${DEALIIVERSION}-src && \
     cd dealii-${DEALIIVERSION}-src && \
     git checkout v${DEALIIVERSION} && \
@@ -40,9 +41,11 @@ RUN cd /tmp && git clone https://github.com/dealii/dealii.git dealii-${DEALIIVER
           -DDEAL_II_COMPONENT_EXAMPLES=OFF \
           -DCMAKE_INSTALL_PREFIX=/usr/local \
           -DCMAKE_BUILD_TYPE=Release \
+          -DDEAL_II_ALLOW_BUNDLED=OFF \
           -GNinja \
           ../ && \
-    ninja -j 1 && ninja -j 1 install && \
+    ninja -j "$(nproc)"  && \
+    ninja -j 1 install && \
     cd / && rm -rf /tmp/deal*
 
 # TODO clone needs a "versioned" branch
