@@ -48,8 +48,5 @@ RUN cd /tmp && git clone https://github.com/dealii/dealii.git dealii-${DEALIIVER
     ninja -j 1 install && \
     cd / && rm -rf /tmp/deal*
 
-# TODO clone needs a "versioned" branch
-RUN cd /tmp ; ls && git clone --recurse-submodules https://github.com/pymor/pymor-deal.II deal && \
-     pip install /tmp/deal/ && rm -rf /tmp/deal
 # THE END
 ENV DEBIAN_FRONTEND teletype
