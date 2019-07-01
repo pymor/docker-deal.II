@@ -11,7 +11,7 @@ pythons: $(PYTHONS)
 $(PYTHONS):
 	for DEAL in $(DEALII_VERSIONS) ; do \
 		pushd testing && \
-		docker build --pull --build-arg PYVER=$@ --build-arg DEALIIVERSION=$${DEAL} -t pymor/dealii:v$${DEAL}_py$@ . && \
+		docker build --build-arg PYVER=$@ --build-arg DEALIIVERSION=$${DEAL} -t pymor/dealii:v$${DEAL}_py$@ . && \
 		popd ; \
 	done
 
