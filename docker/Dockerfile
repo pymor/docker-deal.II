@@ -20,7 +20,7 @@ RUN apt-get install -y software-properties-common \
     libnetcdf-c++4-dev \
     libnetcdf-cxx-legacy-dev \
     libnetcdf-dev \
-    libarpack2-dev libsuitesparse-dev libboost-all-dev libgmsh-dev \
+    libarpack2-dev libboost-all-dev libgmsh-dev \
     liblapack-dev libmuparser-dev libmetis-dev libtbb-dev \
     ninja-build \
     numdiff \
@@ -47,6 +47,16 @@ RUN cd /tmp && git clone https://github.com/dealii/dealii.git dealii-${DEALIIVER
     ninja -j "$(nproc)"  && \
     ninja -j 1 install && \
     cd / && rm -rf /tmp/deal*
+RUN cd /tmp && git clone --recurse-submodules --branch=non_release https://github.com/pymor/pymor-deal.II deal && \
+    cd deal && python setup.py bdist_wheel && \
+    mkdir /usr/local/tmp/ && \
+    mv dist/*.whl /usr/local/tmp/
+ONBUILD RUN pip install /usr/local/tmp/pymor_dealii*.whl && \
+        apt update && \
+        apt-get install -q -y --no-install-recommends libumfpack5 libmuparser2v5 libatlas3-base libnetcdf-c++4 libgsl23 \
+        && \
+        apt-get clean && \
+        rm -rf /var/lib/apt/lists/*
 
 # THE END
 ENV DEBIAN_FRONTEND teletype
