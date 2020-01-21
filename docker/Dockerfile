@@ -51,8 +51,10 @@ RUN cd /tmp && git clone --recurse-submodules --branch=non_release https://githu
     cd deal && python setup.py bdist_wheel && \
     mkdir /usr/local/tmp/ && \
     mv dist/*.whl /usr/local/tmp/
-ONBUILD RUN pip install /usr/local/tmp/pymor_dealii*.whl && \
+ONBUILD RUN pip install pyqt5==5.13.1 && \
+        pip install /usr/local/tmp/pymor_dealii*.whl && \
         apt update && \
+        pip uninstall -y pyqt5 && \
         apt-get install -q -y --no-install-recommends libumfpack5 libmuparser2v5 libatlas3-base libnetcdf-c++4 libgsl23 \
         && \
         apt-get clean && \
