@@ -1,5 +1,5 @@
-ARG PYVER=3.7
-FROM pymor/python:$PYVER
+ARG BASE
+FROM $BASE
 
 MAINTAINER rene.milk@wwu.de
 

@@ -22,4 +22,4 @@ jobs:
         dockerRegistryEndpoint: dockerhub
 
     - script: make $(PY)
-    - script: make push
+    - script: make push_$(PY)
